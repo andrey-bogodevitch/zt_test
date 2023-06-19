@@ -10,7 +10,6 @@ import (
 )
 
 type Storage interface {
-	CreateTable() error
 	AddUser(user entity.User) error
 	GetLastUser() (entity.User, error)
 	IncreaseCache(ctx context.Context, key string, val int64) (int64, error)
@@ -22,14 +21,6 @@ type Service struct {
 
 func NewService(s Storage) *Service {
 	return &Service{storage: s}
-}
-
-func (s *Service) CreateNewTable() error {
-	err := s.storage.CreateTable()
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 func (s *Service) AddNewUser(user entity.User) error {

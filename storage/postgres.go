@@ -40,15 +40,6 @@ func New(dbpool *sql.DB, redis *redis.Client) *Repository {
 	}
 }
 
-func (r *Repository) CreateTable() error {
-	query := "CREATE TABLE IF NOT EXISTS users1 (id BIGSERIAL PRIMARY KEY, name TEXT, age INT);"
-	_, err := r.db.Exec(query)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 func (r *Repository) AddUser(user entity.User) error {
 	query := "INSERT INTO users1 (name, age) values ($1, $2)"
 	_, err := r.db.Exec(query, user.Name, user.Age)

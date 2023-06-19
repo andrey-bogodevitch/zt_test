@@ -10,7 +10,6 @@ import (
 )
 
 type UserService interface {
-	CreateNewTable() error
 	AddNewUser(user entity.User) error
 	GetUser() (entity.User, error)
 	ComputeHmac(message, secret string) (string, error)
@@ -65,12 +64,6 @@ func (h *Handler) AddUser(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		sendJsonError(w, err, http.StatusBadRequest)
-		return
-	}
-
-	err = h.service.CreateNewTable()
-	if err != nil {
-		sendJsonError(w, err, http.StatusInternalServerError)
 		return
 	}
 
